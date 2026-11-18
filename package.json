@@ -1,0 +1,11 @@
+{
+  "name": "tdoa-fdoa",
+  "version": "0.1.0",
+  "description": "Interactive lessons on TDOA/FDOA radio geolocation",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node serve.mjs",
+    "test": "node --test"
+  }
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anatomy diagrams</title>
+  <link rel="stylesheet" href="../vendor/katex/katex.min.css">
+  <script defer src="../vendor/katex/katex.min.js"></script>
+  <link rel="stylesheet" href="../css/app.css">
+  <style>
+    body { background: var(--bg); color: var(--text); margin: 0; padding: 16px; font-family: var(--font-sans); }
+    #grid { display: grid; grid-template-columns: repeat(auto-fill, 460px); gap: 12px 20px; }
+    #grid > div { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; }
+    #grid h2 { font-size: 13px; margin: 4px 0 0; color: var(--muted); font-weight: 600; }
+    #grid svg { max-width: 440px !important; }
+  </style>
+  <!-- Usage: ?theme=dark|light  ?only=name[,name]  -->
+  <script>
+    (function () {
+      var t = new URLSearchParams(location.search).get('theme');
+      if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+</head>
+<body>
+  <div id="grid"></div>
+  <script type="module">
+    import { diagram, DIAGRAM_NAMES } from '../js/ui/diagrams.js';
+    const only = new URLSearchParams(location.search).get('only');
+    const names = only ? only.split(',') : DIAGRAM_NAMES;
+    const grid = document.getElementById('grid');
+    for (const name of names) {
+      const box = document.createElement('div');
+      const h = document.createElement('h2');
+      h.textContent = name;
+      box.append(h);
+      try { box.append(diagram(name)); } catch (e) { box.append(String(e)); }
+      grid.append(box);
+    }
+  </script>
+</body>
+</html>
